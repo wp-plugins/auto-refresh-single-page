@@ -8,7 +8,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/auto-refresh-single-page
-* Version: 1.0
+* Version: 1.1
 */
 
 
@@ -35,13 +35,12 @@ function arspAddRefreshOptionBox() {
 }
 
 function arspAddRefreshMetaTag() {
-	global $post;
+	global $wp_query;
+	$page_obj = $wp_query->get_queried_object();
 	
 	if (!is_admin()) {
-		
-		$arsp_options = unserialize(get_post_meta($post->ID, 'arsp_options', true));
-		
-		if (intval($arsp_options['seconds']) && $arsp_options['seconds'] > 0) {
+		$arsp_options = unserialize(get_post_meta($page_obj->ID, 'arsp_options', true));
+		if (intval($arsp_options['seconds']) && intval($arsp_options['seconds'] > 0)) {
 			echo '<meta http-equiv="refresh" content="' . $arsp_options['seconds'] . '" />';
 		}
 	}
@@ -97,14 +96,13 @@ function arspSaveRefreshOptions($post_id) {
 ** @since 0.1
 *******************************************************************************/
 function initRefreshSinglePage() {
-	/* Add code to generated page if req. */
-	add_filter('wp_head', 'arspAddRefreshMetaTag');
-	
 	/* Add options box to pages */
 	add_action('add_meta_boxes', 'arspAddRefreshOptionBox');
 	add_action('save_post', 'arspSaveRefreshOptions');
 }
 
 add_action('init', 'initRefreshSinglePage');
+/* Add code to generated page if req. */
+add_action('wp_head', 'arspAddRefreshMetaTag');
 
 ?>
