@@ -3,7 +3,7 @@ Contributors: jkohlbach
 Donate link: http://www.codemyownroad.com
 Tags: auto refresh, refresh meta, meta tags, automatic refreshing, refresh a page, refresh pages, auto refresh post, auto refresh page
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 Adds a little box for you to specify if a page should auto refresh after a given number of seconds.
